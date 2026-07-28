@@ -292,6 +292,7 @@ class ExperimentSummary(BaseModel):
     experiment_id: str
     user_id: str
     model_id: str
+    model_name: Optional[str] = None
     device_id: Optional[str] = None
     start_at: Optional[str] = None
     total_images: Optional[int] = None
@@ -306,11 +307,13 @@ class ExperimentListItem(BaseModel):
     start_at: Optional[str] = None
     device_id: Optional[str] = None
     model_id: str
+    model_name: Optional[str] = None
 
 
 class ExperimentDetail(BaseModel):
     experiment_id: str
     model_id: str
+    model_name: Optional[str] = None
     device_id: Optional[str] = None
     start_at: Optional[str] = None
     total_images: Optional[int] = None

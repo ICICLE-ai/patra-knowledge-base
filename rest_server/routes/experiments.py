@@ -28,6 +28,22 @@ def _float(value):
     return float(value) if value is not None else None
 
 
+# events.model_id is free text with two possible conventions, per the ingest
+# trigger fn_ingest_camera_trap_event (db/bootstrap_schema.sql): either
+# models.id as text, or a model_cards.uuid optionally suffixed "-model".
+# Resolve it the same way here to surface a human-readable model name.
+_MODEL_NAME_JOIN = """
+    LEFT JOIN LATERAL (
+        SELECT m.name
+        FROM models m
+        LEFT JOIN model_cards mc ON mc.id = m.model_card_id
+        WHERE m.id::text = events.model_id
+           OR mc.uuid::text = regexp_replace(events.model_id, '-model$', '')
+        LIMIT 1
+    ) resolved_model ON true
+"""
+
+
 @router.get("/{domain}/users", response_model=list[ExperimentUser])
 async def list_experiment_users(
     domain: str = Path(...),
@@ -52,22 +68,24 @@ async def get_user_experiment_summary(
     pool: asyncpg.Pool = Depends(get_pool),
 ):
     _validate_domain(domain)
-    query = """
+    query = f"""
         SELECT
-            experiment_id,
-            user_id,
-            model_id,
-            device_id,
-            MIN(image_receiving_timestamp) AS start_at,
-            MAX(total_images) AS total_images,
-            SUM(CASE WHEN image_decision = 'Save' THEN 1 ELSE 0 END) AS saved_images,
-            MAX(precision) AS precision,
-            MAX(recall) AS recall,
-            MAX(f1_score) AS f1_score
+            events.experiment_id,
+            events.user_id,
+            events.model_id,
+            MAX(resolved_model.name) AS model_name,
+            events.device_id,
+            MIN(events.image_receiving_timestamp) AS start_at,
+            MAX(events.total_images) AS total_images,
+            SUM(CASE WHEN events.image_decision = 'Save' THEN 1 ELSE 0 END) AS saved_images,
+            MAX(events.precision) AS precision,
+            MAX(events.recall) AS recall,
+            MAX(events.f1_score) AS f1_score
         FROM events
-        WHERE domain = $1 AND user_id = $2
-        GROUP BY experiment_id, user_id, model_id, device_id
-        ORDER BY MIN(image_receiving_timestamp) DESC
+        {_MODEL_NAME_JOIN}
+        WHERE events.domain = $1 AND events.user_id = $2
+        GROUP BY events.experiment_id, events.user_id, events.model_id, events.device_id
+        ORDER BY MIN(events.image_receiving_timestamp) DESC
     """
     async with pool.acquire() as conn:
         rows = await conn.fetch(query, domain, user_id)
@@ -77,6 +95,7 @@ async def get_user_experiment_summary(
             experiment_id=row["experiment_id"],
             user_id=row["user_id"],
             model_id=row["model_id"],
+            model_name=row["model_name"],
             device_id=row["device_id"],
             start_at=row["start_at"].isoformat() if row["start_at"] else None,
             total_images=row["total_images"],
@@ -96,16 +115,18 @@ async def list_user_experiments(
     pool: asyncpg.Pool = Depends(get_pool),
 ):
     _validate_domain(domain)
-    query = """
+    query = f"""
         SELECT DISTINCT
-            experiment_id,
-            MIN(image_receiving_timestamp) AS start_at,
-            device_id,
-            model_id
+            events.experiment_id,
+            MIN(events.image_receiving_timestamp) AS start_at,
+            events.device_id,
+            events.model_id,
+            MAX(resolved_model.name) AS model_name
         FROM events
-        WHERE domain = $1 AND user_id = $2
-        GROUP BY experiment_id, device_id, model_id
-        ORDER BY MIN(image_receiving_timestamp) DESC
+        {_MODEL_NAME_JOIN}
+        WHERE events.domain = $1 AND events.user_id = $2
+        GROUP BY events.experiment_id, events.device_id, events.model_id
+        ORDER BY MIN(events.image_receiving_timestamp) DESC
     """
     async with pool.acquire() as conn:
         rows = await conn.fetch(query, domain, user_id)
@@ -116,6 +137,7 @@ async def list_user_experiments(
             start_at=row["start_at"].isoformat() if row["start_at"] else None,
             device_id=row["device_id"],
             model_id=row["model_id"],
+            model_name=row["model_name"],
         )
         for row in rows
     ]
@@ -128,11 +150,12 @@ async def get_experiment_detail(
     pool: asyncpg.Pool = Depends(get_pool),
 ):
     _validate_domain(domain)
-    query = """
-        SELECT *
+    query = f"""
+        SELECT events.*, resolved_model.name AS model_name
         FROM events
-        WHERE domain = $1 AND experiment_id = $2
-        ORDER BY image_count DESC
+        {_MODEL_NAME_JOIN}
+        WHERE events.domain = $1 AND events.experiment_id = $2
+        ORDER BY events.image_count DESC
         LIMIT 1
     """
     async with pool.acquire() as conn:
@@ -143,6 +166,7 @@ async def get_experiment_detail(
     return ExperimentDetail(
         experiment_id=row["experiment_id"],
         model_id=row["model_id"],
+        model_name=row["model_name"],
         device_id=row["device_id"],
         start_at=row["image_receiving_timestamp"].isoformat() if row["image_receiving_timestamp"] else None,
         total_images=row["total_images"],
