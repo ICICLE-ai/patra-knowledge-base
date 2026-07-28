@@ -283,6 +283,10 @@ class EditableRecordSummary(BaseModel):
     updated_at: Optional[str] = None
 
 
+class UserRegistration(BaseModel):
+    username: str
+
+
 class ExperimentUser(BaseModel):
     user_id: str
     username: Optional[str] = None
