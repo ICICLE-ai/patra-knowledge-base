@@ -9,11 +9,10 @@ per integer id so tests can assert round-trip lookups.
 from rest_server.errors import ASSET_NOT_AVAILABLE_DETAIL
 from tests.conftest import (
     ALL_MC_IDS,
-    PRIVATE_DS_IDENTIFIERS,
+    ALL_MC_UUIDS,
     PRIVATE_DS_UUIDS,
     PRIVATE_MC_IDS,
     PRIVATE_MC_UUIDS,
-    PUBLIC_DS_IDENTIFIERS,
     PUBLIC_DS_UUIDS,
     PUBLIC_MC_IDS,
     PUBLIC_MC_UUIDS,
@@ -32,16 +31,16 @@ class TestWithoutToken:
         assert resp.status_code == 200
         data = resp.json()
         assert len(data) == 5
-        returned_ids = {mc["id"] for mc in data}
-        assert returned_ids == set(PUBLIC_MC_IDS)
+        returned_uuids = {mc["uuid"] for mc in data}
+        assert returned_uuids == set(PUBLIC_MC_UUIDS)
 
     def test_list_datasheets_returns_only_public(self, client):
         resp = client.get("/datasheets")
         assert resp.status_code == 200
         data = resp.json()
         assert len(data) == 5
-        returned_ids = {ds["identifier"] for ds in data}
-        assert returned_ids == set(PUBLIC_DS_IDENTIFIERS)
+        returned_uuids = {ds["uuid"] for ds in data}
+        assert returned_uuids == set(PUBLIC_DS_UUIDS)
 
     def test_private_modelcard_detail_returns_404(self, client):
         resp = client.get(f"/modelcard/{PRIVATE_MC_UUIDS[0]}")
@@ -51,7 +50,6 @@ class TestWithoutToken:
     def test_public_modelcard_detail_returns_200(self, client):
         resp = client.get(f"/modelcard/{PUBLIC_MC_UUIDS[0]}")
         assert resp.status_code == 200
-        assert resp.json()["id"] == PUBLIC_MC_IDS[0]
         assert resp.json()["uuid"] == PUBLIC_MC_UUIDS[0]
 
     def test_private_modelcard_download_url_returns_404(self, client):
@@ -82,7 +80,7 @@ class TestWithoutToken:
     def test_public_datasheet_detail_returns_200(self, client):
         resp = client.get(f"/datasheet/{PUBLIC_DS_UUIDS[0]}")
         assert resp.status_code == 200
-        assert resp.json()["identifier"] == PUBLIC_DS_IDENTIFIERS[0]
+        assert resp.json()["uuid"] == PUBLIC_DS_UUIDS[0]
 
 
 # ─── Scenario 2: With X-Tapis-Token ─────────────────────────────────────────
@@ -96,16 +94,16 @@ class TestWithTapisToken:
         assert resp.status_code == 200
         data = resp.json()
         assert len(data) == 10
-        returned_ids = {mc["id"] for mc in data}
-        assert returned_ids == set(ALL_MC_IDS)
+        returned_uuids = {mc["uuid"] for mc in data}
+        assert returned_uuids == set(ALL_MC_UUIDS)
 
     def test_list_datasheets_returns_all(self, client, tapis_headers):
         resp = client.get("/datasheets", headers=tapis_headers)
         assert resp.status_code == 200
         data = resp.json()
         assert len(data) == 10
-        returned_ids = {ds["identifier"] for ds in data}
-        assert returned_ids == set(PUBLIC_DS_IDENTIFIERS + PRIVATE_DS_IDENTIFIERS)
+        returned_uuids = {ds["uuid"] for ds in data}
+        assert returned_uuids == set(PUBLIC_DS_UUIDS + PRIVATE_DS_UUIDS)
 
     def test_private_modelcard_detail_returns_200(self, client, tapis_headers):
         resp = client.get(
@@ -113,7 +111,6 @@ class TestWithTapisToken:
             headers=tapis_headers,
         )
         assert resp.status_code == 200
-        assert resp.json()["id"] == PRIVATE_MC_IDS[0]
         assert resp.json()["uuid"] == PRIVATE_MC_UUIDS[0]
 
     def test_private_modelcard_download_url_returns_200(self, client, tapis_headers):
@@ -138,7 +135,7 @@ class TestWithTapisToken:
             headers=tapis_headers,
         )
         assert resp.status_code == 200
-        assert resp.json()["identifier"] == PRIVATE_DS_IDENTIFIERS[0]
+        assert resp.json()["uuid"] == PRIVATE_DS_UUIDS[0]
 
 
 # ─── Edge cases ──────────────────────────────────────────────────────────────

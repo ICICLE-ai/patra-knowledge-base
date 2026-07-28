@@ -341,7 +341,6 @@ async def list_model_cards(
         rows = await conn.fetch(query, *params)
     return [
         ModelCardSummary(
-            id=int(r["id"]),
             uuid=str(r["uuid"]),
             name=r["name"],
             categories=r["category"],
@@ -384,7 +383,6 @@ async def get_model_card(
     ai_model = _build_ai_model(model_card_row, model_row, external_metadata)
     is_gated = bool(model_card_row["is_gated"] or (external_metadata or {}).get("is_gated"))
     return ModelCardDetail(
-        id=int(model_card_row["id"]),
         uuid=str(model_card_row["uuid"]),
         name=model_card_row["name"],
         version=model_card_row["version"],

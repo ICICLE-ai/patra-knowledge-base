@@ -125,7 +125,6 @@ async def list_datasheets(
         rows = await conn.fetch(query, *params)
     return [
         DatasheetSummary(
-            identifier=r["identifier"],
             uuid=str(r["uuid"]),
             title=r["title"] or "",
             creator=r["creator"],
@@ -314,7 +313,6 @@ async def get_datasheet(
         )
 
     return DatasheetDetail(
-        identifier=row["identifier"],
         uuid=str(row["uuid"]),
         publication_year=row["publication_year"],
         resource_type=row["resource_type"],

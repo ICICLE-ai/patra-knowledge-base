@@ -7,9 +7,8 @@ from pydantic import BaseModel, Field
 
 
 class ModelCardSummary(BaseModel):
-    """List endpoint: id, uuid, name, categories, author, version, short_description."""
+    """List endpoint: uuid, name, categories, author, version, short_description."""
 
-    id: int
     uuid: str
     name: str
     categories: Optional[str] = None
@@ -68,9 +67,8 @@ class ModelDeployment(BaseModel):
 
 
 class ModelCardDetail(BaseModel):
-    """Detail endpoint: matches reconstruct() format. uuid is the external PID; id is the internal bigint."""
+    """Detail endpoint: matches reconstruct() format. uuid is the external PID."""
 
-    id: int
     uuid: str
     name: str
     version: Optional[str] = None
@@ -226,7 +224,6 @@ class DatasheetFundingReference(BaseModel):
 class DatasheetSummary(BaseModel):
     """List endpoint."""
 
-    identifier: int
     uuid: str
     title: str
     creator: Optional[str] = None
@@ -238,7 +235,6 @@ class DatasheetSummary(BaseModel):
 class DatasheetDetail(BaseModel):
     """Detail endpoint: DataCite-style nested structure plus selected flat fields."""
 
-    identifier: int
     uuid: str
     publication_year: Optional[int] = None
     resource_type: Optional[str] = None
