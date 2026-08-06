@@ -5,6 +5,7 @@ This directory groups PATRA backend logic by feature instead of keeping all feat
 Current modules:
 - `ask_patra`: conversational assistant service, prompts, and models
 - `automated_ingestion`: isolated CSV ingestion pipeline
+- `hf_import`: fetches a public Hugging Face model/dataset repo and normalizes it into flat Submit-form fields
 - `agent_toolkit`: schema-search-oriented AI tooling docs and support files
 - `resource_records`: record editing/search domain docs
 - `shared`: reusable OpenAI-compatible provider helpers

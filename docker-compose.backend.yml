@@ -37,6 +37,7 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://${POSTGRES_USER:-patra}:${POSTGRES_PASSWORD:-patra-dev-password}@postgres:5432/${POSTGRES_DB:-patra}}
       PATRA_ASSET_INGEST_KEYS_JSON: '{"org-a":"change-me"}'
       ENABLE_DOMAIN_EXPERIMENTS: ${ENABLE_DOMAIN_EXPERIMENTS:-true}
+      ENABLE_HF_IMPORT: ${ENABLE_HF_IMPORT:-true}
     ports:
       - "${BACKEND_PORT:-8000}:8000"
     healthcheck:

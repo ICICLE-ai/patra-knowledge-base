@@ -42,6 +42,10 @@ def is_domain_experiments_enabled() -> bool:
     return _env_flag("ENABLE_DOMAIN_EXPERIMENTS", default=False)
 
 
+def is_hf_import_enabled() -> bool:
+    return _env_flag("ENABLE_HF_IMPORT", default=False)
+
+
 # ---------------------------------------------------------------------------
 # Auth / admin
 # ---------------------------------------------------------------------------

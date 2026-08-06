@@ -8,11 +8,12 @@ import asyncpg
 
 from rest_server.database import close_pool, get_pool, init_pool
 from rest_server.errors import database_unavailable
-from rest_server.routes import agent_tools, ask_patra, assets, datasheets, experiments, model_cards, users
+from rest_server.routes import agent_tools, ask_patra, assets, datasheets, experiments, hf_import, model_cards, users
 from shared.config import (
     get_db_startup_timeout_seconds,
     is_ask_patra_enabled,
     is_domain_experiments_enabled,
+    is_hf_import_enabled,
 )
 
 log = logging.getLogger(__name__)
@@ -64,6 +65,12 @@ if is_domain_experiments_enabled():
     log.info("Experiment routes enabled")
 else:
     log.info("Experiment routes disabled")
+
+if is_hf_import_enabled():
+    app.include_router(hf_import.router)
+    log.info("HF import routes enabled")
+else:
+    log.info("HF import routes disabled")
 
 
 @app.get("/")

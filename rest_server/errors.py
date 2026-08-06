@@ -26,3 +26,7 @@ def database_unavailable() -> HTTPException:
 
 def service_not_configured(service: str) -> HTTPException:
     return HTTPException(status_code=503, detail=f"{service} is not configured")
+
+
+def upstream_fetch_failed(service: str, detail: str) -> HTTPException:
+    return HTTPException(status_code=502, detail=f"Failed to fetch data from {service}: {detail}")
