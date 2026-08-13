@@ -1,5 +1,6 @@
 pytest==8.3.5
 pytest-asyncio==1.2.0
+pytest-cov==5.0.0
 requests==2.32.3
 asyncpg==0.31.0
 mcp[cli]==1.10.1

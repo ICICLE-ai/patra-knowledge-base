@@ -1,0 +1,6 @@
+[run]
+source = rest_server, shared
+omit = */tests/*, poc/*, db/*
+
+[report]
+show_missing = True

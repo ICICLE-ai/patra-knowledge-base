@@ -73,3 +73,7 @@ conda-meta/
 *.temp
 .tmp/
 .temp/
+
+# Coverage
+.coverage
+coverage.xml
