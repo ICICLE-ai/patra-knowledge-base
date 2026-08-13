@@ -6,6 +6,7 @@ from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import asyncpg
 
+from rest_server import __version__
 from rest_server.database import close_pool, get_pool, init_pool
 from rest_server.errors import database_unavailable
 from rest_server.routes import agent_tools, ask_patra, assets, datasheets, experiments, hf_import, model_cards, users
@@ -36,7 +37,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="Patra Privacy API",
     description="API for model cards and datasheets with JWT-aware privacy",
-    version="1.0",
+    version=__version__,
     lifespan=lifespan,
 )
 
@@ -75,7 +76,7 @@ else:
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the Patra Privacy API"}
+    return {"message": "Welcome to the Patra Privacy API", "version": __version__}
 
 
 @app.get("/healthz")
