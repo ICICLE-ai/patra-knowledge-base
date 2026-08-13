@@ -344,8 +344,8 @@ Result: Returns complete model card data
 
 ## License
 
-The **Patra Knowledge Base** is copyrighted by the **Indiana University Board of Trustees** and distributed under the **BSD 3-Clause License**. See the `LICENSE` file for more details.
+The **Patra Knowledge Base** is copyrighted by **Plale Lab at The University of Oregon** and distributed under the **BSD 3-Clause License**. See the `LICENSE` file for more details.
 
 ## Acknowledgements
-This work has been funded by grants from the National Science Foundation, including the ICICLE AI Institute (OAC 2112606), and in part through Data to Insight Center (D2I) at Indiana University.
+This work has been funded by grants from the National Science Foundation, including the ICICLE AI Institute (OAC 2112606), and in part through Plale Lab at The University of Oregon.
 
