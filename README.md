@@ -5,7 +5,7 @@
   # Patra Knowledge Base
 
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
-[![Build Status](https://github.com/Data-to-Insight-Center/patra-kg/actions/workflows/ci.yml/badge.svg)](https://github.com/Data-to-Insight-Center/patra-kg/actions)
+[![Build Status](https://github.com/Plale-Lab/patra-knowledge-base/actions/workflows/ci.yml/badge.svg)](https://github.com/Plale-Lab/patra-knowledge-base/actions)
 
 </div>
 
@@ -32,13 +32,13 @@ At the heart of the Patra Knowledge Base is the concept of Model Cards. These ca
 
 Key features and capabilities of the Patra ModelCards Framework include:
 
-- **Semi-automated information capture:** Patra reduces the burden of manual documentation by automatically capturing information about model fairness, explainability, and performance in different deployment environments. This automation is facilitated by the [Model Card Toolkit](https://github.com/Data-to-Insight-Center/patra-toolkit)  , which invokes analysis tools and integrates the results directly into the Model Cards.
+- **Semi-automated information capture:** Patra reduces the burden of manual documentation by automatically capturing information about model fairness, explainability, and performance in different deployment environments. This automation is facilitated by the [Model Card Toolkit](https://github.com/Plale-Lab/patra-toolkit)  , which invokes analysis tools and integrates the results directly into the Model Cards.
   
 - **Relational system of record:** Patra's active backend now uses PostgreSQL as the system of record for model cards, datasheets, and protected asset ingestion APIs. Neo4j-era graph components are preserved only as legacy reference code and are no longer the supported runtime path.
   
 - **Provenance tracking:** Patra leverages the concepts of **forward and backward provenance** to comprehensively track the relationships between models, datasets, and deployment instances. This makes it possible to understand the lineage of models, trace their origins, and analyze their usage patterns.
   
-- **Real-time deployment information:** Patra integrates with the [CKN Edge AI Framework](https://github.com/Data-to-Insight-Center/cyberinfrastructure-knowledge-network)  to capture real-time information about model execution in edge environments. This includes data on performance, resource usage, and other relevant metrics, which can be used to optimize deployments and gain insights into model behavior in real-world settings.
+- **Real-time deployment information:** Patra integrates with the [CKN Edge AI Framework](https://github.com/Plale-Lab/cyberinfrastructure-knowledge-network)  to capture real-time information about model execution in edge environments. This includes data on performance, resource usage, and other relevant metrics, which can be used to optimize deployments and gain insights into model behavior in real-world settings.
   
 - **Machine-actionable API:** Patra provides a **machine-actionable API** that allows intelligent systems in the edge-cloud continuum to query the knowledge base and make informed decisions about model selection. This enables automated model selection based on various criteria, including fairness, explainability, and performance metrics, further enhancing accountability and transparency.
   
@@ -170,7 +170,7 @@ Requires `repo` scope enabled on the GitHub token.
 
 ### 2. Clone the repository and start services
 ```bash
-git clone https://github.com/Data-to-Insight-Center/patra-kg.git
+git clone https://github.com/Plale-Lab/patra-knowledge-base.git
 cd patra-kg
 docker compose -f docker-compose.backend.yml up --build
 ```
