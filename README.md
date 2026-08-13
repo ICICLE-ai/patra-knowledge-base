@@ -171,7 +171,7 @@ Requires `repo` scope enabled on the GitHub token.
 ### 2. Clone the repository and start services
 ```bash
 git clone https://github.com/Plale-Lab/patra-knowledge-base.git
-cd patra-kg
+cd patra-knowledge-base
 docker compose -f docker-compose.backend.yml up --build
 ```
   
@@ -344,8 +344,8 @@ Result: Returns complete model card data
 
 ## License
 
-The **Patra Knowledge Base** is copyrighted by the **Indiana University Board of Trustees** and distributed under the **BSD 3-Clause License**. See the `LICENSE.txt` file for more details.
+The **Patra Knowledge Base** is copyrighted by the **Indiana University Board of Trustees** and distributed under the **BSD 3-Clause License**. See the `LICENSE` file for more details.
 
 ## Acknowledgements
-This research is funded in part through the National Science Foundation under award #2112606, AI Institute for Intelligent CyberInfrastructure with Computational Learning in the Environment (ICICLE), and in part through Data to Insight Center (D2I) at Indiana University.
+This work has been funded by grants from the National Science Foundation, including the ICICLE AI Institute (OAC 2112606), and in part through Data to Insight Center (D2I) at Indiana University.
 
