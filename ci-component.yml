@@ -1,28 +1,28 @@
-- id: PatraKG:1.0.0
-  name: Patra Knowledge Base
-  status: ProductionRelease
-  website: https://github.com/Plale-Lab/patra-knowledge-base
-  description: Knowledge Graph to capture AI/ML model lifecycle from creation through deployments.
+- id: PatraKnowledgeBase:1.0.0
   owner: Beth Plale
   primaryThrust: core/AI4CI
-  sourceCodeUrl: https://github.com/Plale-Lab/patra-knowledge-base
-  targetIcicleRelease: 2026-08
+  name: Patra Knowledge Base
+  status: ProductionRelease
+  description: Knowledge Graph to capture AI/ML model lifecycle from creation through deployments.
   componentVersion: 1.0.0
-  licenseUrl: https://github.com/Plale-Lab/patra-knowledge-base/blob/main/LICENSE
+  targetIcicleRelease: "2026-08"
+  licenseUrl: https://github.com/Plale-Lab/patra-knowledge-base?tab=BSD-3-Clause-1-ov-file
+  publicAccess: true
+  sourceCodeUrl: https://github.com/Plale-Lab/patra-knowledge-base
+  codeReviewConducted: true
+  testsWritten: true
+  developerDocumentationAvailable: false
+  trainingTutorialsAvailable: false
+  # Fields below aren't part of the icicle-component-info-skill schema; kept per
+  # team decision rather than dropped.
+  website: https://github.com/Plale-Lab/patra-knowledge-base
   releaseNotesUrl: https://github.com/Plale-Lab/patra-knowledge-base/releases/tag/v1.0.0
   doi: https://doi.org/10.1109/e-Science62913.2024.10678710
   citation: S. Withana and B. Plale, Patra ModelCards':' AI/ML Accountability in the Edge-Cloud Continuum
   pypiPackage:
   containerImage: https://hub.docker.com/r/plalelab/patra-server
-  codeReviewConducted: true
-  testsWritten: true
   securityReviewConducted: false
   biasAssessmentConducted: false
   usageDocumentationAvailable: true
   usageDocumentationUrl: https://github.com/Plale-Lab/patra-knowledge-base/blob/main/README.md
-  developerDocumentationAvailable: false
-  developerDocumentationUrl:
-  trainingTutorialsAvailable: false
-  trainingTutorialsUrl:
   usageMetricsCollected: false
-  publicAccess: true
