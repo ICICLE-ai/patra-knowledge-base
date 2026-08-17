@@ -17,7 +17,7 @@ For guidance on what How-To Guides and Explanation content covers, see [Diátaxi
 
 ### License
 
-The **Patra Knowledge Base** is copyrighted by **Plale Lab at The University of Oregon** and distributed under the **BSD 3-Clause License**. See the `LICENSE` file for more details.
+The **Patra Knowledge Base** copyright is held by **Plale Lab at The University of Oregon** and distributed under the **BSD 3-Clause License**. See the `LICENSE` file for more details.
 
 ## References
 
